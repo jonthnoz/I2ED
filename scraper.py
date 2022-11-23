@@ -6,8 +6,14 @@ from selenium.webdriver.common import action_chains, keys
 # definition of the search
 search = "esiea"
 
+# set options to not be detected as a bot
+option = webdriver.FirefoxOptions()
+option.add_argument("window-size=1920,1080")
+option.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:106.0) Gecko/20100101 Firefox/106.0") # Mozilla/5.0 (X11; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0
+
 # create browser
-browser = webdriver.Firefox()
+browser = webdriver.Firefox(options=option)
+browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
 # go to google search page
 browser.get('https://www.google.com')
@@ -36,3 +42,12 @@ elements = browser.find_elements(by='xpath', value='//h3')
 # display results
 for e in elements:
     print(e.text)
+
+
+
+# close browser window
+browser.quit()
+
+## to check bot detection
+# browser.get("https://amiunique.org/fp")
+# browser.get('https://antcpt.com/score_detector/')
